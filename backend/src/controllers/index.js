@@ -1,19 +1,56 @@
-class IndexController {
-    async getItems(req, res) {
-        // Logic to get items from the database
-    }
+const Vocab = require('../models/index');
 
-    async createItem(req, res) {
-        // Logic to create a new item in the database
-    }
+// Lấy tất cả từ vựng
+exports.list_all_words = async (req, res) => {
+  try {
+    const words = await Vocab.find({});
+    res.json(words);
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-    async updateItem(req, res) {
-        // Logic to update an existing item in the database
-    }
+// Tạo từ mới
+exports.create_a_word = async (req, res) => {
+  const newWord = new Vocab(req.body);
+  try {
+    const word = await newWord.save();
+    res.json(word);
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-    async deleteItem(req, res) {
-        // Logic to delete an item from the database
-    }
-}
+// Xem chi tiết 1 từ
+exports.read_a_word = async (req, res) => {
+  try {
+    const word = await Vocab.findById(req.params.wordId);
+    res.json(word);
+  } catch (err) {
+    res.send(err);
+  }
+};
 
-export default IndexController;
+// Cập nhật từ
+exports.update_a_word = async (req, res) => {
+  try {
+    const word = await Vocab.findOneAndUpdate(
+      { _id: req.params.wordId },
+      req.body,
+      { new: true }
+    );
+    res.json(word);
+  } catch (err) {
+    res.send(err);
+  }
+};
+
+// Xóa từ
+exports.delete_a_word = async (req, res) => {
+  try {
+    await Vocab.deleteOne({ _id: req.params.wordId });
+    res.json({ message: 'Word successfully deleted', _id: req.params.wordId });
+  } catch (err) {
+    res.send(err);
+  }
+};

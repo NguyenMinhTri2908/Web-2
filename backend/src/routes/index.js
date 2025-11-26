@@ -1,15 +1,12 @@
-const express = require('express');
-const IndexController = require('../controllers/index');
+const vocabBuilder = require('../controllers/index');
 
-const router = express.Router();
-const indexController = new IndexController();
+module.exports = (app) => {
+  app.route('/words')
+    .get(vocabBuilder.list_all_words)
+    .post(vocabBuilder.create_a_word);
 
-function setRoutes(app) {
-    router.get('/', indexController.home);
-    router.get('/api/data', indexController.getData);
-    // Add more routes as needed
-
-    app.use('/api', router);
-}
-
-module.exports = setRoutes;
+  app.route('/words/:wordId')
+    .get(vocabBuilder.read_a_word)
+    .put(vocabBuilder.update_a_word)
+    .delete(vocabBuilder.delete_a_word);
+};

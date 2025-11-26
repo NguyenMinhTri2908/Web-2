@@ -1,23 +1,23 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
-const setRoutes = require('./routes/index');
-const db = require('./utils/db');
+const mongoose = require('mongoose');
+const routes = require('./routes/index');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-// Middleware
-app.use(bodyParser.json());
+
+mongoose.connect('mongodb://127.0.0.1:27017/cw-web2')
+.then(() => console.log('MongoDB connected...'))
+.catch(err => console.log(err));
+
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// Connect to MongoDB
-db.connect();
+routes(app);
 
-// Set up routes
-setRoutes(app);
-
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server started on port: ${port}`);
 });

@@ -1,23 +1,15 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
-});
+const VocabSchema = new Schema({
+  english: {
+    type: String,
+    required: 'English word cannot be blank'
+  },
+  german: {
+    type: String,
+    required: 'German word cannot be blank'
+  }
+}, { collection: 'vocab' });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = {
-    User
-};
+module.exports = mongoose.model('Vocab', VocabSchema);
