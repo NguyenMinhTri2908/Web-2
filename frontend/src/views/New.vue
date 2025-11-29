@@ -19,7 +19,7 @@
       async createWord(word) {
         try {
           // Gửi dữ liệu xuống Backend
-          await axios.post('http://localhost:3000/words', word);
+          await axios.post('http://localhost:5001/words', word);
           Swal.fire('Success', 'Word created successfully!', 'success');
           this.$router.push('/words'); // Chuyển hướng về trang chủ
         } catch (error) {

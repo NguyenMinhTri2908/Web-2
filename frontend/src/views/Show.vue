@@ -11,6 +11,10 @@
           <div class="description">
             {{ word.german }}
           </div>
+          <div class="ui sub header">Vietnamese Translation</div>
+          <div class="description">
+            {{ word.vietnamese }}
+          </div>
         </div>
         <div class="extra content">
           <router-link :to="{ name: 'edit', params: { id: word._id }}" class="ui button primary">
@@ -37,7 +41,7 @@
     },
     async mounted() {
       try {
-        const res = await axios.get(`http://localhost:3000/words/${this.$route.params.id}`);
+        const res = await axios.get(`http://localhost:5001/words/${this.$route.params.id}`);
         this.word = res.data;
       } catch (error) {
         console.error(error);

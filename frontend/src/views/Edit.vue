@@ -24,7 +24,7 @@
       // Lấy ID từ đường dẫn URL (ví dụ /words/123/edit -> lấy 123)
       const id = this.$route.params.id;
       try {
-        const res = await axios.get(`http://localhost:3000/words/${id}`);
+        const res = await axios.get(`http://localhost:5001/words/${id}`);
         this.word = res.data;
       } catch (error) {
         console.error(error);
@@ -33,7 +33,7 @@
     methods: {
       async updateWord(word) {
         try {
-          await axios.put(`http://localhost:3000/words/${word._id}`, word);
+          await axios.put(`http://localhost:5001/words/${word._id}`, word);
           Swal.fire('Success', 'Word updated successfully!', 'success');
           this.$router.push('/words');
         } catch (error) {

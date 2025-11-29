@@ -1,46 +1,50 @@
+/* frontend/public/styles.css */
+
+/* 1. Làm dịu màu nền toàn trang (bớt trắng lóa) */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-}
-
-h1, h2, h3 {
-    color: #333;
-}
-
-.container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
-}
-
-.header {
-    background: #35424a;
-    color: #ffffff;
-    padding: 20px 0;
-    text-align: center;
-}
-
-.footer {
-    background: #35424a;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.button {
-    display: inline-block;
-    font-size: 16px;
-    color: #ffffff;
-    background: #e8491d;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.button:hover {
-    background: #333;
-}
+    background-color: #f7f9fc !important; /* Màu xám xanh nhạt hiện đại */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #2c3e50 !important;
+  }
+  
+  /* 2. Làm đẹp tiêu đề (Header) */
+  h1 {
+    margin-top: 0 !important;
+    margin-bottom: 25px !important;
+    color: #0d47a1 !important; /* Xanh đậm chuyên nghiệp */
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* 3. Tạo khối nổi (Card effect) cho nội dung chính */
+  .ui.segment {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important; /* Đổ bóng mềm */
+    border: none !important;
+    border-radius: 12px !important; /* Bo tròn góc */
+    padding: 30px !important;
+  }
+  
+  /* 4. Tùy biến bảng dữ liệu (Table) */
+  .ui.table {
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    border: none !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+  }
+  
+  .ui.table thead th {
+    background-color: #e3f2fd !important; /* Màu xanh nhạt cho tiêu đề cột */
+    color: #1565c0 !important;
+    font-weight: bold !important;
+  }
+  
+  /* 5. Hiệu ứng nút bấm chung */
+  .ui.button {
+    border-radius: 8px !important;
+    transition: transform 0.2s ease !important;
+  }
+  
+  .ui.button:hover {
+    transform: translateY(-2px) !important; /* Nút nảy lên khi di chuột */
+  }

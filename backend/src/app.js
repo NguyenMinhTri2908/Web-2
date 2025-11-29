@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const routes = require('./routes/index');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5001;
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/cw-web2')

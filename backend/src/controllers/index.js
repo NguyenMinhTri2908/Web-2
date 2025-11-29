@@ -54,3 +54,25 @@ exports.delete_a_word = async (req, res) => {
     res.send(err);
   }
 };
+// Hàm tìm kiếm riêng biệt
+exports.search_words = async (req, res) => {
+  try {
+    const { q } = req.query; // Lấy từ khóa từ URL (?q=...)
+    
+    if (q) {
+      const words = await Vocab.find({
+        $or: [
+          { english: { $regex: q, $options: 'i' } },
+          { german: { $regex: q, $options: 'i' } },
+          { vietnamese: { $regex: q, $options: 'i' } }
+        ]
+      });
+      res.json(words);
+    } else {
+      // Nếu không có từ khóa thì trả về mảng rỗng hoặc thông báo
+      res.json([]); 
+    }
+  } catch (err) {
+    res.send(err);
+  }
+};

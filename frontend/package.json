@@ -10,7 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "vue": "^3.0.0"
+    "axios": "^1.13.2",
+    "fomantic-ui-css": "^2.9.4",
+    "sweetalert2": "^11.26.3",
+    "vue": "^3.0.0",
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",

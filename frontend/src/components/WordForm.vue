@@ -11,6 +11,11 @@
         <label>German</label>
         <input type="text" placeholder="Enter word..." v-model="word.german" />
       </div>
+
+      <div class="field">
+        <label>Vietnamese</label>
+        <input type="text" placeholder="Enter word..." v-model="word.vietnamese" />
+      </div>
   
       <button class="ui button primary">Submit</button>
     </form>
@@ -25,7 +30,8 @@
         required: false,
         default: () => ({
           english: '',
-          german: ''
+          german: '',
+          vietnamese: ''
         })
       }
     },
@@ -36,7 +42,7 @@
     },
     methods: {
       onSubmit() {
-        if (this.word.english === '' || this.word.german === '') {
+        if (this.word.english === '' || this.word.german === ''|| this.word.vietnamese === '') {
           this.errorsPresent = true;
         } else {
           this.errorsPresent = false;
