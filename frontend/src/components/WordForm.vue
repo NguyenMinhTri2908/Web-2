@@ -1,62 +1,80 @@
 <template>
-    <form action="#" @submit.prevent="onSubmit" class="ui form">
-      <p v-if="errorsPresent" class="error">Please fill out both fields!</p>
-  
-      <div class="field">
-        <label>English</label>
-        <input type="text" placeholder="Enter word..." v-model="word.english" />
-      </div>
-  
-      <div class="field">
-        <label>German</label>
-        <input type="text" placeholder="Enter word..." v-model="word.german" />
-      </div>
+  <v-card class="pa-4" elevation="3">
+    <v-form @submit.prevent="onSubmit">
+      <v-alert
+        v-if="errorsPresent"
+        type="error"
+        title="Validation Error"
+        text="Please fill out all fields!"
+        class="mb-4"
+        closable
+      ></v-alert>
 
-      <div class="field">
-        <label>Vietnamese</label>
-        <input type="text" placeholder="Enter word..." v-model="word.vietnamese" />
-      </div>
-  
-      <button class="ui button primary">Submit</button>
-    </form>
-  </template>
-  
-  <script>
-  export default {
-    name: 'WordForm',
-    props: {
-      word: {
-        type: Object,
-        required: false,
-        default: () => ({
-          english: '',
-          german: '',
-          vietnamese: ''
-        })
-      }
-    },
-    data() {
-      return {
-        errorsPresent: false
-      };
-    },
-    methods: {
-      onSubmit() {
-        if (this.word.english === '' || this.word.german === ''|| this.word.vietnamese === '') {
-          this.errorsPresent = true;
-        } else {
-          this.errorsPresent = false;
-          // Gửi dữ liệu ra component cha (New hoặc Edit)
-          this.$emit('createOrUpdate', this.word);
-        }
+      <v-text-field
+        label="English"
+        v-model="word.english"
+        prepend-inner-icon="mdi-alpha-e-box text-blue"
+        variant="outlined"
+        placeholder="Enter English word..."
+      ></v-text-field>
+
+      <v-text-field
+        label="German"
+        v-model="word.german"
+        prepend-inner-icon="mdi-alpha-g-box text-yellow"
+        variant="outlined"
+        placeholder="Enter German word..."
+      ></v-text-field>
+
+      <v-text-field
+        label="Vietnamese"
+        v-model="word.vietnamese"
+        prepend-inner-icon="mdi-alpha-v-box text-red"
+        variant="outlined"
+        placeholder="Enter Vietnamese word..."
+      ></v-text-field>
+
+      <v-btn
+        type="submit"
+        color="primary"
+        block
+        size="large"
+        prepend-icon="mdi-content-save"
+      >
+        Submit
+      </v-btn>
+    </v-form>
+  </v-card>
+</template>
+
+<script>
+export default {
+  name: 'WordForm',
+  props: {
+    word: {
+      type: Object,
+      required: false,
+      default: () => ({
+        english: '',
+        german: '',
+        vietnamese: ''
+      })
+    }
+  },
+  data() {
+    return {
+      errorsPresent: false
+    };
+  },
+  methods: {
+    onSubmit() {
+      if (this.word.english === '' || this.word.german === '' || this.word.vietnamese === '') {
+        this.errorsPresent = true;
+      } else {
+        this.errorsPresent = false;
+        this.$emit('createOrUpdate', this.word);
       }
     }
-  };
-  </script>
-  
-  <style scoped>
-  .error {
-    color: red;
-    font-weight: bold;
   }
-  </style>
+};
+</script>

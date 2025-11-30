@@ -1,43 +1,99 @@
 <template>
   <div>
-    <div class="ui segment">
-      <h2 class="ui header">Score: {{ score }} out of {{ this.words.length }}</h2>
-
-      <form action="#" @submit.prevent="onSubmit" class="ui form">
-        <div class="field">
-          <div class="ui labeled input fluid">
-            <div class="ui label">
-              <i class="germany flag"></i> German
-            </div>
-            <input type="text" readonly :disabled="testOver" :value="currWord.german" />
-          </div>
+    <v-card class="mx-auto" max-width="600" elevation="4">
+      <v-card-item class="bg-primary text-white">
+        <div class="d-flex justify-space-between align-center">
+          <v-card-title class="text-h5 font-weight-bold">
+            Vocabulary Quiz
+          </v-card-title>
+          <v-chip color="white" variant="outlined" class="font-weight-bold">
+            Score: {{ score }} / {{ this.words.length }}
+          </v-chip>
         </div>
+      </v-card-item>
 
-        <div class="field">
-          <div class="ui labeled input fluid">
-            <div class="ui label">
-              <i class="uk flag"></i> English
-            </div>
-            <input 
-              type="text" 
-              placeholder="Enter English word..." 
-              v-model="english" 
-              :disabled="testOver" 
-              autocomplete="off" 
-              ref="answerInput"
-            />
+      <v-card-text class="pt-6">
+        <v-form @submit.prevent="onSubmit">
+          <v-text-field
+            label="German Word"
+            :model-value="currWord.german"
+            readonly
+            variant="outlined"
+            prepend-inner-icon="mdi-flag"
+            bg-color="grey-lighten-4"
+            class="mb-2"
+          ></v-text-field>
+
+          <v-text-field
+            label="Enter English Translation"
+            v-model="english"
+            :disabled="testOver"
+            autocomplete="off"
+            ref="answerInput"
+            variant="outlined"
+            prepend-inner-icon="mdi-keyboard"
+            placeholder="Type here..."
+            :autofocus="!testOver"
+          ></v-text-field>
+
+          <v-btn
+            type="submit"
+            color="success"
+            block
+            size="large"
+            :disabled="testOver"
+            class="mt-2 font-weight-bold"
+            prepend-icon="mdi-check"
+          >
+            Submit Answer
+          </v-btn>
+        </v-form>
+      </v-card-text>
+    </v-card>
+
+    <v-dialog v-model="testOver" persistent max-width="500">
+      <v-card>
+        <v-card-title class="text-h5 bg-success text-white">
+          <v-icon icon="mdi-trophy" class="mr-2"></v-icon>
+          Test Completed!
+        </v-card-title>
+        
+        <v-card-text class="pa-4">
+          <div v-if="incorrectGuesses.length === 0" class="text-center">
+            <v-icon icon="mdi-emoticon-cool" color="success" size="64" class="mb-2"></v-icon>
+            <h3 class="text-h6 text-success">Perfect Score!</h3>
+            <p>You got everything correct. Well done!</p>
           </div>
-        </div>
 
-        <button class="ui button positive" :disabled="testOver">Submit</button>
-      </form>
-    </div>
+          <div v-else>
+            <v-alert
+              type="error"
+              variant="tonal"
+              title="Words to review:"
+              class="mb-2"
+            >
+              <ul class="ml-4 mt-2">
+                <li v-for="(word, index) in incorrectGuesses" :key="index">
+                  {{ word }}
+                </li>
+              </ul>
+            </v-alert>
+          </div>
+        </v-card-text>
 
-    <div v-if="testOver" :class="['ui message', resultClass]">
-      <div class="header">Test Completed</div>
-      <p v-html="result"></p>
-      <button class="ui button primary" @click="resetTest">Try Again</button>
-    </div>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            variant="elevated"
+            @click="resetTest"
+            prepend-icon="mdi-refresh"
+          >
+            Try Again
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 

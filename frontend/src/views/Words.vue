@@ -1,48 +1,95 @@
 <template>
   <div>
-    <h1>Words List</h1>
+    <h1 class="text-h4 mb-4 text-primary font-weight-bold">
+      Words List
+    </h1>
     
-    <p v-if="$route.query.q">
-      Search result for: "<strong>{{ $route.query.q }}</strong>"
-    </p>
+    <v-alert
+      v-if="$route.query.q"
+      color="info"
+      icon="mdi-magnify"
+      variant="tonal"
+      class="mb-4"
+    >
+      Search result for: <strong>"{{ $route.query.q }}"</strong>
+    </v-alert>
 
-    <table class="ui celled table">
-      <thead>
-        <tr>
-          <th>English</th>
-          <th>German</th>
-          <th>Vietnamese</th>
-          <th width="220">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="word in words" :key="word._id">
-          <td>{{ word.english }}</td>
-          <td>{{ word.german }}</td>
-          <td>{{ word.vietnamese }}</td>
-          <td>
-            <router-link 
-              :to="{ name: 'show', params: { id: word._id } }" 
-              class="ui mini button blue"
-            >
-              View
-            </router-link>
-            <router-link 
-              :to="{ name: 'edit', params: { id: word._id } }" 
-              class="ui mini button orange"
-            >
-              Edit
-            </router-link>
-            <button @click="deleteWord(word._id)" class="ui mini button red">
-              Delete
-            </button>
-          </td>
-        </tr>
-        <tr v-if="words.length === 0">
-          <td colspan="3" class="center aligned">No words found.</td>
-        </tr>
-      </tbody>
-    </table>
+    <v-card elevation="3">
+      <v-table hover>
+        <thead>
+          <tr class="bg-primary">
+            <th class="text-white text-h6">
+              <v-icon icon="mdi-alpha-e-box " class="mr-1"></v-icon>
+              English
+            </th>
+            <th class="text-white text-h6">
+              <v-icon icon="mdi-alpha-g-box " class="mr-1" ></v-icon>
+              German
+            </th>
+            <th class="text-white text-h6">
+              <v-icon icon="mdi-alpha-v-box " class="mr-1"></v-icon>
+              Vietnamese
+            </th>
+            <th class="text-white text-center text-h6" width="250">
+              <v-icon icon="mdi-cog" class="mr-1"></v-icon>
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="word in words" :key="word._id">
+            <td class="text-body-1 font-weight-medium">{{ word.english }}</td>
+            <td class="text-body-1">{{ word.german }}</td>
+            <td class="text-body-1">{{ word.vietnamese }}</td>
+            <td class="text-center">
+              <v-tooltip text="View Details" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    :to="{ name: 'show', params: { id: word._id } }"
+                    icon="mdi-eye"
+                    color="info"
+                    variant="text"
+                    class="mr-1"
+                  ></v-btn>
+                </template>
+              </v-tooltip>
+
+              <v-tooltip text="Edit Word" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    :to="{ name: 'edit', params: { id: word._id } }"
+                    icon="mdi-pencil"
+                    color="warning"
+                    variant="text"
+                    class="mr-1"
+                  ></v-btn>
+                </template>
+              </v-tooltip>
+
+              <v-tooltip text="Delete Word" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    @click="deleteWord(word._id)"
+                    icon="mdi-delete"
+                    color="error"
+                    variant="text"
+                  ></v-btn>
+                </template>
+              </v-tooltip>
+            </td>
+          </tr>
+          <tr v-if="words.length === 0">
+            <td colspan="4" class="text-center pa-6 text-h6 text-grey">
+              <v-icon icon="mdi-emoticon-sad-outline" size="large" class="mb-2"></v-icon><br>
+              No words found. Try adding some!
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
+    </v-card>
   </div>
 </template>
 
@@ -60,15 +107,11 @@ export default {
   methods: {
     async getWords() {
       try {
-        // 1. Lấy từ khóa từ thanh địa chỉ (URL)
         const query = this.$route.query.q;
         let url = 'http://localhost:5001/words';
-        
-        // 2. Nếu có từ khóa, dùng API tìm kiếm riêng
         if (query) {
           url = `http://localhost:5001/words/search?q=${query}`;
         }
-
         const response = await axios.get(url);
         this.words = response.data;
       } catch (error) {
@@ -91,10 +134,8 @@ export default {
         try {
           await axios.delete(`http://localhost:5001/words/${id}`);
           Swal.fire('Deleted!', 'Your word has been deleted.', 'success');
-          // Tải lại danh sách sau khi xóa
           this.getWords();
         } catch (error) {
-          console.error(error);
           Swal.fire('Error', 'Failed to delete word', 'error');
         }
       }
@@ -103,15 +144,8 @@ export default {
   mounted() {
     this.getWords();
   },
-  // Quan trọng: Theo dõi sự thay đổi trên URL để tìm kiếm lại ngay lập tức
   watch: {
     '$route.query.q': 'getWords'
   }
 };
 </script>
-
-<style scoped>
-h1 {
-  margin-bottom: 20px;
-}
-</style>

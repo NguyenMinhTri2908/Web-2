@@ -1,33 +1,21 @@
 <template>
-    <div class="ui inverted vertical footer segment">
-      <div class="ui container">
-        <div class="ui stackable inverted divided grid">
-          <div class="seven wide column">
-            <h4 class="ui inverted header">Vocab Builder</h4>
-            <p>Ứng dụng giúp bạn học từ vựng Tiếng Anh - Đức - Việt hiệu quả mỗi ngày.</p>
-          </div>
-         
-            
-        
-          <div class="six wide column">
-            <h4 class="ui inverted header">Bản quyền</h4>
-            <p>&copy; 2025 Web 2 Project.</p>
-            <p>University of Greenwich.</p>
-          </div>
-        </div>
-      </div>
+  <v-footer color="primary" class="d-flex flex-column mt-10">
+    <div class="bg-primary d-flex w-100 align-center px-4">
+      <strong>Vocab Builder - Học từ vựng mỗi ngày!</strong>
+      <v-spacer></v-spacer>
+      <v-btn icon="mdi-facebook" variant="plain" size="small"></v-btn>
+      <v-btn icon="mdi-twitter" variant="plain" size="small"></v-btn>
+      <v-btn icon="mdi-linkedin" variant="plain" size="small"></v-btn>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Footer'
-  };
-  </script>
-  
-  <style scoped>
-  .footer.segment {
-    padding: 3em 0em;
-    margin-top: 50px; /* Tạo khoảng cách với nội dung chính */
-  }
-  </style>
+
+    <div class="px-4 py-2 bg-black text-center w-100">
+      {{ new Date().getFullYear() }} — <strong>University of Greenwich</strong>
+    </div>
+  </v-footer>
+</template>
+
+<script>
+export default {
+  name: 'Footer'
+};
+</script>

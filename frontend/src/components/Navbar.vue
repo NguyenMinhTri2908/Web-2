@@ -1,60 +1,46 @@
 <template>
-    <div class="ui secondary pointing menu massive blue custom-menu">
-      <router-link to="/words" class="item" active-class="active">
-        <i class="home icon"></i> Home
-      </router-link>
-      <router-link to="/words/new" class="item" active-class="active">
-        <i class="plus circle icon"></i> Add Word
-      </router-link>
-      <router-link to="/test" class="item" active-class="active">
-        <i class="check circle icon"></i> Test
-      </router-link>
-      <router-link to="/about" class="item" active-class="active">
-        <i class="info circle icon"></i> About
-      </router-link>
-      
-      <div class="right menu">
-        <div class="item">
-          <div class="ui icon input transparent-input">
-            <input 
-              type="text" 
-              placeholder="Search vocabulary..." 
-              v-model="keyword"
-              @keyup.enter="onSearch"
-            >
-            <i class="search link icon" @click="onSearch"></i>
-          </div>
-        </div>
+  <v-app-bar color="primary" density="compact" elevation="2">
+    <v-app-bar-title class="font-weight-bold">
+      <v-icon icon="mdi-school" class="mr-2"></v-icon>
+      Vocab Builder
+    </v-app-bar-title>
+
+    <template v-slot:append>
+      <v-btn to="/words" variant="text" prepend-icon="mdi-home">Home</v-btn>
+      <v-btn to="/words/new" variant="text" prepend-icon="mdi-plus">Add</v-btn>
+      <v-btn to="/test" variant="text" prepend-icon="mdi-check-circle">Test</v-btn>
+      <v-btn to="/about" variant="text" prepend-icon="mdi-information">About</v-btn>
+
+      <div class="d-flex align-center ml-4" style="width: 250px">
+        <v-text-field
+          v-model="keyword"
+          density="compact"
+          variant="solo-filled"
+          label="Search vocabulary..."
+          append-inner-icon="mdi-magnify"
+          single-line
+          hide-details
+          @click:append-inner="onSearch"
+          @keyup.enter="onSearch"
+          class="shrink"
+        ></v-text-field>
       </div>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'NavBar',
-    data() {
-      return {
-        keyword: ''
-      };
-    },
-    methods: {
-      onSearch() {
-        // Chuyển hướng sang trang danh sách với tham số tìm kiếm
-        // Lưu ý: Nếu đang ở trang khác, router sẽ tự chuyển về /words
-        this.$router.push({ name: 'words', query: { q: this.keyword } });
-      }
+    </template>
+  </v-app-bar>
+</template>
+
+<script>
+export default {
+  name: 'NavBar',
+  data() {
+    return {
+      keyword: ''
+    };
+  },
+  methods: {
+    onSearch() {
+      this.$router.push({ name: 'words', query: { q: this.keyword } });
     }
-  };
-  </script>
-  
-  <style scoped>
-  /* Chuyển các style riêng của Menu sang đây */
-  .ui.secondary.pointing.menu .item.active {
-    border-color: #2185d0 !important;
-    color: #2185d0 !important;
-    font-weight: bold;
   }
-  .ui.secondary.pointing.menu .item:hover {
-    color: #0d47a1 !important;
-  }
-  </style>
+};
+</script>

@@ -1,10 +1,13 @@
 <template>
-    <div>
-      <h1>Add New Word</h1>
-      <word-form @createOrUpdate="createWord"></word-form>
-    </div>
-  </template>
-  
+  <div>
+    <h1 class="text-h4 mb-4 text-center font-weight-bold text-primary">Add New Word</h1>
+    <v-row justify="center">
+      <v-col cols="12" md="8" lg="6">
+        <word-form @createOrUpdate="createWord"></word-form>
+      </v-col>
+    </v-row>
+  </div>
+</template>
   <script>
   import WordForm from '../components/WordForm.vue';
   import axios from 'axios';

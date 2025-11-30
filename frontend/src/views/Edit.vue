@@ -1,10 +1,14 @@
 <template>
-    <div>
-      <h1>Edit Word</h1>
-      <word-form v-if="word && word._id" :word="word" @createOrUpdate="updateWord"></word-form>
-    </div>
-  </template>
-  
+  <div>
+    <h1 class="text-h4 mb-4 text-center font-weight-bold text-primary">Edit Word</h1>
+    <v-row justify="center">
+      <v-col cols="12" md="8" lg="6">
+        <word-form v-if="word && word._id" :word="word" @createOrUpdate="updateWord"></word-form>
+        <v-skeleton-loader v-else type="card"></v-skeleton-loader>
+      </v-col>
+    </v-row>
+  </div>
+</template>
   <script>
   import WordForm from '../components/WordForm.vue';
   import axios from 'axios';
