@@ -59,13 +59,13 @@
   </script>
   
   <style scoped>
-  /* Căn giữa tiêu đề nội dung */
+  
   .text-center {
     text-align: center;
     margin-top: 10px;
   }
   
-  /* Tăng kích thước chữ cho dễ đọc */
+  
   p {
     font-size: 1.1em;
     line-height: 1.6;

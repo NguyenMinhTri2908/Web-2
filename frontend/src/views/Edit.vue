@@ -25,7 +25,7 @@
       };
     },
     async mounted() {
-      // Lấy ID từ đường dẫn URL (ví dụ /words/123/edit -> lấy 123)
+      // Lấy ID từ đường dẫn URL 
       const id = this.$route.params.id;
       try {
         const res = await axios.get(`http://localhost:5001/words/${id}`);
